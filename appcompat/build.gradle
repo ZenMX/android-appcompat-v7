@@ -2,12 +2,15 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 archivesBaseName = 'appcompat-v7'
 
+ext {
+    supportVersion = '25.4.0'
+}
 
 dependencies {
-    compile 'com.android.support:support-annotations:25.4.0'
-    compile 'com.android.support:support-v4:25.4.0'
-    compile 'com.android.support:support-vector-drawable:25.4.0'
-    compile 'com.android.support:animated-vector-drawable:25.4.0'
+    compile "com.android.support:support-annotations:${supportVersion}"
+    compile "com.android.support:support-v4:${supportVersion}"
+    compile "com.android.support:support-vector-drawable:${supportVersion}"
+    compile "com.android.support:animated-vector-drawable:${supportVersion}"
 
 //    compile project(':support-annotations')
 //    compile project(':support-v4')
@@ -89,25 +92,25 @@ publishing {
                 def de = node.appendNode('dependency')
                 de.appendNode('groupId', 'com.android.support')
                 de.appendNode('artifactId', 'support-annotations')
-                de.appendNode('version', '25.4.0')
+                de.appendNode('version', "${supportVersion}")
                 de.appendNode('scope', 'compile')
 
                 de = node.appendNode('dependency')
                 de.appendNode('groupId', 'com.android.support')
                 de.appendNode('artifactId', 'support-v4')
-                de.appendNode('version', '25.4.0')
+                de.appendNode('version', "${supportVersion}")
                 de.appendNode('scope', 'compile')
 
                 de = node.appendNode('dependency')
                 de.appendNode('groupId', 'com.android.support')
                 de.appendNode('artifactId', 'support-vector-drawable')
-                de.appendNode('version', '25.4.0')
+                de.appendNode('version', "${supportVersion}")
                 de.appendNode('scope', 'compile')
 
                 de = node.appendNode('dependency')
                 de.appendNode('groupId', 'com.android.support')
                 de.appendNode('artifactId', 'animated-vector-drawable')
-                de.appendNode('version', '25.4.0')
+                de.appendNode('version', "${supportVersion}")
                 de.appendNode('scope', 'compile')
 
             }

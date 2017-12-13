@@ -1,0 +1,48 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/intermediates/res/merged/release/values-xlarge-v4/values-xlarge-v4.xml",
+            "map": [
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-xlarge/dimens.xml",
+                    "from": {
+                        "startLines": "19,20,17,18,22,23",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "827,898,687,757,970,1038",
+                        "endColumns": "70,70,69,69,67,67",
+                        "endOffsets": "893,964,752,822,1033,1101"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,126,197,267,337,405",
+                        "endColumns": "70,70,69,69,67,67",
+                        "endOffsets": "121,192,262,332,400,468"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-xlarge-v4/values-xlarge-v4.xml",
+            "map": [
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-xlarge/dimens.xml",
+                    "from": {
+                        "startLines": "19,20,17,18,22,23",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "827,898,687,757,970,1038",
+                        "endColumns": "70,70,69,69,67,67",
+                        "endOffsets": "893,964,752,822,1033,1101"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "55,126,197,267,337,405",
+                        "endColumns": "70,70,69,69,67,67",
+                        "endOffsets": "121,192,262,332,400,468"
+                    }
+                }
+            ]
+        }
+    ]
+}

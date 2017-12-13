@@ -1,0 +1,82 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-land/values-land.xml",
+            "map": [
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-land/dimens_material.xml",
+                    "from": {
+                        "startLines": "18,22,20",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "733,978,855",
+                        "endColumns": "69,70,67",
+                        "endOffsets": "798,1044,918"
+                    },
+                    "to": {
+                        "startLines": "2,4,5",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,189,260",
+                        "endColumns": "69,70,67",
+                        "endOffsets": "120,255,323"
+                    }
+                },
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-land/dimens.xml",
+                    "from": {
+                        "startLines": "18",
+                        "startColumns": "4",
+                        "startOffsets": "739",
+                        "endColumns": "63",
+                        "endOffsets": "798"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "125",
+                        "endColumns": "63",
+                        "endOffsets": "184"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/intermediates/res/merged/release/values-land/values-land.xml",
+            "map": [
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-land/dimens_material.xml",
+                    "from": {
+                        "startLines": "18,22,20",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "733,978,855",
+                        "endColumns": "69,70,67",
+                        "endOffsets": "798,1044,918"
+                    },
+                    "to": {
+                        "startLines": "2,4,5",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,189,260",
+                        "endColumns": "69,70,67",
+                        "endOffsets": "120,255,323"
+                    }
+                },
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-land/dimens.xml",
+                    "from": {
+                        "startLines": "18",
+                        "startColumns": "4",
+                        "startOffsets": "739",
+                        "endColumns": "63",
+                        "endOffsets": "798"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "125",
+                        "endColumns": "63",
+                        "endOffsets": "184"
+                    }
+                }
+            ]
+        }
+    ]
+}

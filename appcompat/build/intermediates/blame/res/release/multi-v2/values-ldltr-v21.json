@@ -1,0 +1,48 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-ldltr-v21/values-ldltr-v21.xml",
+            "map": [
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-ldltr-v21/styles_base.xml",
+                    "from": {
+                        "startLines": "25",
+                        "startColumns": "4",
+                        "startOffsets": "1003",
+                        "endColumns": "113",
+                        "endOffsets": "1112"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "112",
+                        "endOffsets": "163"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/intermediates/res/merged/release/values-ldltr-v21/values-ldltr-v21.xml",
+            "map": [
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-ldltr-v21/styles_base.xml",
+                    "from": {
+                        "startLines": "25",
+                        "startColumns": "4",
+                        "startOffsets": "1003",
+                        "endColumns": "113",
+                        "endOffsets": "1112"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "112",
+                        "endOffsets": "163"
+                    }
+                }
+            ]
+        }
+    ]
+}

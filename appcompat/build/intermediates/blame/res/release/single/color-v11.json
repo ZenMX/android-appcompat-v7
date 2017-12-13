@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/intermediates/res/merged/release/color-v11/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/intermediates/res/merged/release/color-v11/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+    }
+]

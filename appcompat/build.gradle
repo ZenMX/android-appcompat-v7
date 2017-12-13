@@ -1,0 +1,195 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+archivesBaseName = 'appcompat-v7'
+
+
+dependencies {
+    compile 'com.android.support:support-annotations:25.4.0'
+    compile 'com.android.support:support-v4:25.4.0'
+    compile 'com.android.support:support-vector-drawable:25.4.0'
+    compile 'com.android.support:animated-vector-drawable:25.4.0'
+
+//    compile project(':support-annotations')
+//    compile project(':support-v4')
+//    compile project(':support-vector-drawable')
+//    compile project(':support-animated-vector-drawable')
+
+//    androidTestCompile ("com.android.support.test:runner:${project.rootProject.ext.testRunnerVersion}") {
+//        exclude module: 'support-annotations'
+//    }
+//    androidTestCompile ("com.android.support.test.espresso:espresso-core:${project.rootProject.ext.espressoVersion}") {
+//        exclude module: 'support-annotations'
+//    }
+//    androidTestCompile 'org.mockito:mockito-core:1.9.5'
+//    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
+//    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
+//    testCompile 'junit:junit:4.12'
+}
+
+android {
+    compileSdkVersion 25
+
+    defaultConfig {
+        minSdkVersion 9
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // This disables the builds tools automatic vector -> PNG generation
+        generatedDensities = []
+    }
+
+    sourceSets {
+        main.manifest.srcFile 'AndroidManifest.xml'
+        main.java.srcDir 'src'
+        main.res.srcDirs 'res', 'res-public'
+        main.assets.srcDir 'assets'
+        main.resources.srcDir 'src'
+
+        androidTest.setRoot('tests')
+        androidTest.java.srcDir 'tests/src'
+        androidTest.res.srcDir 'tests/res'
+        androidTest.manifest.srcFile 'tests/AndroidManifest.xml'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+}
+
+android.libraryVariants.all { variant ->
+    def name = variant.buildType.name
+
+    if (name.equals(com.android.builder.core.BuilderConstants.DEBUG)) {
+        return; // Skip debug builds.
+    }
+    def suffix = name.capitalize()
+
+    def sourcesJarTask = project.tasks.create(name: "sourceJar${suffix}", type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    artifacts.add('archives', sourcesJarTask);
+}
+
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'com.android.support'
+            artifactId 'appcompat-v7'
+            version '25.4.1'
+//            artifact(sourceJar)
+            artifact("$buildDir/outputs/aar/appcompat-v7-debug.aar")
+
+            pom.withXml {
+                def node = asNode().appendNode('dependencies')
+                def de = node.appendNode('dependency')
+                de.appendNode('groupId', 'com.android.support')
+                de.appendNode('artifactId', 'support-annotations')
+                de.appendNode('version', '25.4.0')
+                de.appendNode('scope', 'compile')
+
+                de = node.appendNode('dependency')
+                de.appendNode('groupId', 'com.android.support')
+                de.appendNode('artifactId', 'support-v4')
+                de.appendNode('version', '25.4.0')
+                de.appendNode('scope', 'compile')
+
+                de = node.appendNode('dependency')
+                de.appendNode('groupId', 'com.android.support')
+                de.appendNode('artifactId', 'support-vector-drawable')
+                de.appendNode('version', '25.4.0')
+                de.appendNode('scope', 'compile')
+
+                de = node.appendNode('dependency')
+                de.appendNode('groupId', 'com.android.support')
+                de.appendNode('artifactId', 'animated-vector-drawable')
+                de.appendNode('version', '25.4.0')
+                de.appendNode('scope', 'compile')
+
+            }
+        }
+    }
+    repositories {
+        maven {
+            name 'Dev'
+            credentials {
+                username 'admin'
+                password 'admin123'
+            }
+
+            // change to point to your repo, e.g. http://my.org/repo
+            url "http://10.7.0.217:8098/nexus/content/repositories/releases/"
+
+        }
+    }
+}
+
+/**
+ <dependencies>
+ <dependency>
+ <groupId>com.android.support</groupId>
+ <artifactId>support-annotations</artifactId>
+ <version>25.4.0</version>
+ <scope>compile</scope>
+ </dependency>
+ <dependency>
+ <groupId>com.android.support</groupId>
+ <artifactId>support-v4</artifactId>
+ <version>25.4.0</version>
+ <type>aar</type>
+ <scope>compile</scope>
+ </dependency>
+ <dependency>
+ <groupId>com.android.support</groupId>
+ <artifactId>support-vector-drawable</artifactId>
+ <version>25.4.0</version>
+ <type>aar</type>
+ <scope>compile</scope>
+ </dependency>
+ <dependency>
+ <groupId>com.android.support</groupId>
+ <artifactId>animated-vector-drawable</artifactId>
+ <version>25.4.0</version>
+ <type>aar</type>
+ <scope>compile</scope>
+ </dependency>
+ </dependencies>
+ */
+
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri(rootProject.ext.supportRepoOut)) {
+//            }
+//
+//            pom.project {
+//                name 'Android AppCompat Library v7'
+//                description "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren't a part of the framework APIs. Compatible on devices running API 4 or later."
+//                url 'http://developer.android.com/tools/extras/support-library.html'
+//                inceptionYear '2011'
+//
+//                licenses {
+//                    license {
+//                        name 'The Apache Software License, Version 2.0'
+//                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                        distribution 'repo'
+//                    }
+//                }
+//
+//                scm {
+//                    url "http://source.android.com"
+//                    connection "scm:git:https://android.googlesource.com/platform/frameworks/support"
+//                }
+//                developers {
+//                    developer {
+//                        name 'The Android Open Source Project'
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

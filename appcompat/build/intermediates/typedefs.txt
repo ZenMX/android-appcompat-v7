@@ -1,0 +1,1 @@
+D android/support/v7/app/AppCompatDelegate$ApplyableNightMode

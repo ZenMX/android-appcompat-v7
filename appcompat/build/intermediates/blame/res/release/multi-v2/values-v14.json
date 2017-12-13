@@ -1,0 +1,128 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/intermediates/res/merged/release/values-v14/values-v14.xml",
+            "map": [
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-v14/styles_base_text.xml",
+                    "from": {
+                        "startLines": "19",
+                        "startColumns": "4",
+                        "startOffsets": "694",
+                        "endLines": "23",
+                        "endColumns": "12",
+                        "endOffsets": "965"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "326"
+                    }
+                },
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-v14/themes_base.xml",
+                    "from": {
+                        "startLines": "18,19,21,28",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "688,760,845,1256",
+                        "endLines": "18,19,26,33",
+                        "endColumns": "71,83,12,12",
+                        "endOffsets": "755,839,1250,1673"
+                    },
+                    "to": {
+                        "startLines": "7,8,9,15",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "331,402,485,895",
+                        "endLines": "7,8,14,20",
+                        "endColumns": "70,82,12,12",
+                        "endOffsets": "397,480,890,1312"
+                    }
+                },
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-v14/styles.xml",
+                    "from": {
+                        "startLines": "35,32,19,29,26,30,22",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "1448,1307,687,1180,1026,1243,816",
+                        "endLines": "36,33,20,29,28,30,23",
+                        "endColumns": "71,77,71,62,12,62,77",
+                        "endOffsets": "1571,1442,810,1238,1175,1301,951"
+                    },
+                    "to": {
+                        "startLines": "21,22,23,24,25,28,29",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "1317,1437,1569,1689,1752,1906,1969",
+                        "endLines": "21,22,23,24,27,28,29",
+                        "endColumns": "119,131,119,62,12,62,131",
+                        "endOffsets": "1432,1564,1684,1747,1901,1964,2096"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-v14/values-v14.xml",
+            "map": [
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-v14/styles_base_text.xml",
+                    "from": {
+                        "startLines": "19",
+                        "startColumns": "4",
+                        "startOffsets": "694",
+                        "endLines": "23",
+                        "endColumns": "12",
+                        "endOffsets": "965"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "326"
+                    }
+                },
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-v14/themes_base.xml",
+                    "from": {
+                        "startLines": "18,19,21,28",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "688,760,845,1256",
+                        "endLines": "18,19,26,33",
+                        "endColumns": "71,83,12,12",
+                        "endOffsets": "755,839,1250,1673"
+                    },
+                    "to": {
+                        "startLines": "7,8,9,15",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "331,402,485,895",
+                        "endLines": "7,8,14,20",
+                        "endColumns": "70,82,12,12",
+                        "endOffsets": "397,480,890,1312"
+                    }
+                },
+                {
+                    "source": "/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/res/values-v14/styles.xml",
+                    "from": {
+                        "startLines": "35,32,19,29,26,30,22",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "1448,1307,687,1180,1026,1243,816",
+                        "endLines": "36,33,20,29,28,30,23",
+                        "endColumns": "71,77,71,62,12,62,77",
+                        "endOffsets": "1571,1442,810,1238,1175,1301,951"
+                    },
+                    "to": {
+                        "startLines": "21,22,23,24,25,28,29",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "1317,1437,1569,1689,1752,1906,1969",
+                        "endLines": "21,22,23,24,27,28,29",
+                        "endColumns": "119,131,119,62,12,62,131",
+                        "endOffsets": "1432,1564,1684,1747,1901,1964,2096"
+                    }
+                }
+            ]
+        }
+    ]
+}

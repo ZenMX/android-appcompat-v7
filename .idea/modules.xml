@@ -3,12 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/appcompat/appcompat.iml" filepath="$PROJECT_DIR$/appcompat/appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/appcompat/appcompat.iml" filepath="$PROJECT_DIR$/appcompat/appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/gradleplugin.iml" filepath="$PROJECT_DIR$/gradleplugin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/gradleplugin.iml" filepath="$PROJECT_DIR$/gradleplugin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/myplugin/myplugin.iml" filepath="$PROJECT_DIR$/myplugin/myplugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/myplugin/myplugin.iml" filepath="$PROJECT_DIR$/myplugin/myplugin.iml" />
     </modules>
   </component>

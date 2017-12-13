@@ -3,7 +3,7 @@ apply plugin: 'maven-publish'
 archivesBaseName = 'appcompat-v7'
 
 ext {
-    supportVersion = '25.4.0'
+    supportVersion = '27.0.2'
 }
 
 dependencies {
@@ -11,6 +11,8 @@ dependencies {
     compile "com.android.support:support-v4:${supportVersion}"
     compile "com.android.support:support-vector-drawable:${supportVersion}"
     compile "com.android.support:animated-vector-drawable:${supportVersion}"
+    compile "com.android.support:support-fragment:${supportVersion}"
+    compile "com.android.support:support-core-utils:${supportVersion}"
 
 //    compile project(':support-annotations')
 //    compile project(':support-v4')
@@ -30,10 +32,10 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 14
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // This disables the builds tools automatic vector -> PNG generation
         generatedDensities = []
@@ -59,6 +61,7 @@ android {
 
     aaptOptions {
         additionalParameters "--no-version-vectors"
+        noCompress 'ttf'
     }
 }
 
@@ -83,7 +86,7 @@ publishing {
         bar(MavenPublication) {
             groupId 'com.android.support'
             artifactId 'appcompat-v7'
-            version '25.4.1'
+            version '27.0.3'
 //            artifact(sourceJar)
             artifact("$buildDir/outputs/aar/appcompat-v7-debug.aar")
 
@@ -110,6 +113,18 @@ publishing {
                 de = node.appendNode('dependency')
                 de.appendNode('groupId', 'com.android.support')
                 de.appendNode('artifactId', 'animated-vector-drawable')
+                de.appendNode('version', "${supportVersion}")
+                de.appendNode('scope', 'compile')
+
+                de = node.appendNode('dependency')
+                de.appendNode('groupId', 'com.android.support')
+                de.appendNode('artifactId', 'support-fragment')
+                de.appendNode('version', "${supportVersion}")
+                de.appendNode('scope', 'compile')
+
+                de = node.appendNode('dependency')
+                de.appendNode('groupId', 'com.android.support')
+                de.appendNode('artifactId', 'support-core-utils')
                 de.appendNode('version', "${supportVersion}")
                 de.appendNode('scope', 'compile')
 

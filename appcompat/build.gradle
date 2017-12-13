@@ -83,7 +83,7 @@ publishing {
         bar(MavenPublication) {
             groupId 'com.android.support'
             artifactId 'appcompat-v7'
-            version '25.4.1'
+            version '25.4.0.1'
 //            artifact(sourceJar)
             artifact("$buildDir/outputs/aar/appcompat-v7-debug.aar")
 
@@ -125,7 +125,7 @@ publishing {
             }
 
             // change to point to your repo, e.g. http://my.org/repo
-            url "http://10.7.0.217:8098/nexus/content/repositories/releases/"
+            url "http://10.7.0.7:8098/nexus/content/repositories/releases/"
 
         }
     }

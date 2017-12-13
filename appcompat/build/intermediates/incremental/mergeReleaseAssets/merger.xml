@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/src/main/assets"/><source path="/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/assets"/><source path="/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/Users/lin/Documents/android/mx/appcompatv7/gradleplugin/appcompat/src/release/assets"/></dataSet></merger>

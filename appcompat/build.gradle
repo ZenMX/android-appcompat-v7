@@ -90,8 +90,9 @@ publishing {
             artifact("$buildDir/outputs/aar/appcompat-v7-release.aar")
 
             pom.withXml {
-                def node = asNode().appendNode('dependencies')
-                node.appendNode('description', "${publishDesc}")
+                def root = asNode()
+                root.appendNode('description', "${publishDesc}")
+                def node = root.appendNode('dependencies')
                 def de = node.appendNode('dependency')
                 de.appendNode('groupId', 'com.android.support')
                 de.appendNode('artifactId', 'support-annotations')

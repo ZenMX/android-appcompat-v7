@@ -15,50 +15,31 @@
  */
 package android.support.v7.app;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.v7.testutils.DrawerLayoutActions.closeDrawer;
-import static android.support.v7.testutils.DrawerLayoutActions.openDrawer;
-import static android.support.v7.testutils.DrawerLayoutActions.setDrawerLockMode;
-import static android.support.v7.testutils.DrawerLayoutActions.wrap;
-import static android.support.v7.testutils.TestUtilsMatchers.inAscendingOrder;
-import static android.support.v7.testutils.TestUtilsMatchers.inDescendingOrder;
-import static android.support.v7.testutils.TestUtilsMatchers.inRange;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import android.os.Build;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.action.GeneralLocation;
 import android.support.test.espresso.action.GeneralSwipeAction;
 import android.support.test.espresso.action.Press;
 import android.support.test.espresso.action.Swipe;
-import android.support.test.filters.FlakyTest;
-import android.support.test.filters.LargeTest;
-import android.support.test.filters.MediumTest;
-import android.support.test.filters.SmallTest;
-import android.support.test.filters.Suppress;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.appcompat.test.R;
 import android.support.v7.custom.CustomDrawerLayout;
+import android.test.suitebuilder.annotation.MediumTest;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.v7.testutils.DrawerLayoutActions.*;
+import static android.support.v7.testutils.TestUtilsMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class DrawerLayoutTest extends BaseInstrumentationTestCase<DrawerLayoutActivity> {
     private CustomDrawerLayout mDrawerLayout;
@@ -114,10 +95,10 @@ public class DrawerLayoutTest extends BaseInstrumentationTestCase<DrawerLayoutAc
 
     @Test
     @MediumTest
-    public void testDrawerOpenCloseFocus() throws Throwable {
+    public void testDrawerOpenCloseFocus() {
         assertFalse("Initial state", mDrawerLayout.isDrawerOpen(GravityCompat.START));
 
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mContentView.setFocusableInTouchMode(true);
@@ -210,7 +191,7 @@ public class DrawerLayoutTest extends BaseInstrumentationTestCase<DrawerLayoutAc
     }
 
     @Test
-    @LargeTest
+    @MediumTest
     public void testDrawerOpenCloseWithRedundancyViaSwipes() {
         assertFalse("Initial state", mDrawerLayout.isDrawerOpen(GravityCompat.START));
 
@@ -272,17 +253,10 @@ public class DrawerLayoutTest extends BaseInstrumentationTestCase<DrawerLayoutAc
             // specified, so it should have its height reduced by the height of the system status
             // bar.
 
-            final int[] contentViewLocationOnScreen = new int[2];
-            mContentView.getLocationOnScreen(contentViewLocationOnScreen);
-            final int statusBarHeight = contentViewLocationOnScreen[1];
             // Get the system window top inset that was propagated to the top-level DrawerLayout
             // during its layout.
             int drawerTopInset = mDrawerLayout.getSystemWindowInsetTop();
-            if (statusBarHeight > 0) {
-                assertEquals("Drawer top inset is positive on L+", statusBarHeight, drawerTopInset);
-            } else {
-                assertEquals("Drawer top inset 0 due to no status bar", 0, drawerTopInset);
-            }
+            assertTrue("Drawer top inset is positive on L+", drawerTopInset > 0);
             assertEquals("Drawer layout and drawer heights on L+",
                     drawerLayoutHeight - drawerTopInset, contentHeight);
         }
@@ -428,8 +402,6 @@ public class DrawerLayoutTest extends BaseInstrumentationTestCase<DrawerLayoutAc
         mDrawerLayout.removeDrawerListener(mockedListener);
     }
 
-    @Suppress
-    @FlakyTest(bugId = 33659300)
     @Test
     @SmallTest
     public void testDrawerListenerCallbacksOnOpeningViaSwipes() {

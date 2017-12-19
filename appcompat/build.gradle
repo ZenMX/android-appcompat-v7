@@ -4,6 +4,8 @@ archivesBaseName = 'appcompat-v7'
 
 ext {
     supportVersion = '25.4.0'
+    publishDesc = 'base on platform_frameworks_support tag : android-7.1.2_r36'
+    v7Version = "${supportVersion}.2"
 }
 
 dependencies {
@@ -83,12 +85,13 @@ publishing {
         bar(MavenPublication) {
             groupId 'com.android.support'
             artifactId 'appcompat-v7'
-            version '25.4.0.1'
+            version "${v7Version}"
 //            artifact(sourceJar)
-            artifact("$buildDir/outputs/aar/appcompat-v7-debug.aar")
+            artifact("$buildDir/outputs/aar/appcompat-v7-release.aar")
 
             pom.withXml {
                 def node = asNode().appendNode('dependencies')
+                node.appendNode('description', "${publishDesc}")
                 def de = node.appendNode('dependency')
                 de.appendNode('groupId', 'com.android.support')
                 de.appendNode('artifactId', 'support-annotations')

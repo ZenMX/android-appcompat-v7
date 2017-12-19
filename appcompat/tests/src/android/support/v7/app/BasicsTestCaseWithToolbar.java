@@ -17,17 +17,17 @@
 package android.support.v7.app;
 
 import android.support.test.annotation.UiThreadTest;
-import android.support.test.filters.SmallTest;
+import android.test.suitebuilder.annotation.SmallTest;
 
 import org.junit.Test;
 
-@SmallTest
-public class BasicsTestCaseWithToolbar extends BaseBasicsTestCase<ToolbarAppCompatActivity> {
+public class BasicsTestCaseWithToolbar extends BaseBasicsTestCase<ToolbarActionBarActivity> {
     public BasicsTestCaseWithToolbar() {
-        super(ToolbarAppCompatActivity.class);
+        super(ToolbarActionBarActivity.class);
     }
 
     @Test
+    @SmallTest
     @UiThreadTest
     public void testSupportActionModeAppCompatCallbacks() {
         // Since we're using Toolbar, any action modes will be created from the window

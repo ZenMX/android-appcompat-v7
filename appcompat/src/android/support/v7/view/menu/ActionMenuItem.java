@@ -16,8 +16,6 @@
 
 package android.support.v7.view.menu;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -31,10 +29,12 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class ActionMenuItem implements SupportMenuItem {
 
     private final int mId;

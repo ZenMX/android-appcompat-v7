@@ -16,8 +16,6 @@
 
 package android.support.v7.view.menu;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -36,12 +34,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow.OnDismissListener;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
  * Presents a menu as a small, simple popup anchored to another view.
  *
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class MenuPopupHelper implements MenuHelper {
     private static final int TOUCH_EPICENTER_SIZE_DP = 48;
 

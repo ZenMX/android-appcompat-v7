@@ -16,13 +16,11 @@
 
 package android.support.v7.view.menu;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.RequiresApi;
+import android.os.Build;
 import android.support.annotation.RestrictTo;
 import android.support.v4.internal.view.SupportMenuItem;
 import android.support.v4.view.ActionProvider;
@@ -37,13 +35,14 @@ import android.widget.FrameLayout;
 
 import java.lang.reflect.Method;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
  * Wraps a support {@link SupportMenuItem} as a framework {@link android.view.MenuItem}
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
-@TargetApi(14)
-@RequiresApi(14)
+@RestrictTo(GROUP_ID)
+@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class MenuItemWrapperICS extends BaseMenuWrapper<SupportMenuItem> implements MenuItem {
     static final String LOG_TAG = "MenuItemWrapper";
 

@@ -16,7 +16,6 @@
 
 package android.support.v7.app;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -29,7 +28,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.SystemClock;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationBuilderWithBuilderAccessor;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompatBase;
@@ -46,16 +44,12 @@ import java.util.List;
  * Helper class to generate MediaStyle notifications for pre-Lollipop platforms. Overrides
  * contentView and bigContentView of the notification.
  */
-@RequiresApi(9)
-@TargetApi(9)
 class NotificationCompatImplBase {
 
     static final int MAX_MEDIA_BUTTONS_IN_COMPACT = 3;
     static final int MAX_MEDIA_BUTTONS = 5;
     private static final int MAX_ACTION_BUTTONS = 3;
 
-    @RequiresApi(11)
-    @TargetApi(11)
     public static <T extends NotificationCompatBase.Action> RemoteViews overrideContentViewMedia(
             NotificationBuilderWithBuilderAccessor builder,
             Context context, CharSequence contentTitle, CharSequence contentText,
@@ -74,8 +68,6 @@ class NotificationCompatImplBase {
         return views;
     }
 
-    @RequiresApi(11)
-    @TargetApi(11)
     private static <T extends NotificationCompatBase.Action> RemoteViews generateContentViewMedia(
             Context context, CharSequence contentTitle, CharSequence contentText,
             CharSequence contentInfo, int number, Bitmap largeIcon, CharSequence subText,
@@ -120,8 +112,6 @@ class NotificationCompatImplBase {
         return view;
     }
 
-    @RequiresApi(16)
-    @TargetApi(16)
     public static <T extends NotificationCompatBase.Action> void overrideMediaBigContentView(
             Notification n, Context context, CharSequence contentTitle, CharSequence contentText,
             CharSequence contentInfo, int number, Bitmap largeIcon, CharSequence subText,
@@ -129,15 +119,13 @@ class NotificationCompatImplBase {
             boolean showCancelButton, PendingIntent cancelButtonIntent,
             boolean decoratedCustomView) {
         n.bigContentView = generateMediaBigView(context, contentTitle, contentText, contentInfo,
-                number, largeIcon, subText, useChronometer, when, priority, color, actions,
-                showCancelButton, cancelButtonIntent, decoratedCustomView);
+                number, largeIcon, subText, useChronometer, when, priority, color,
+                actions, showCancelButton, cancelButtonIntent, decoratedCustomView);
         if (showCancelButton) {
             n.flags |= Notification.FLAG_ONGOING_EVENT;
         }
     }
 
-    @RequiresApi(11)
-    @TargetApi(11)
     public static <T extends NotificationCompatBase.Action> RemoteViews generateMediaBigView(
             Context context, CharSequence contentTitle, CharSequence contentText,
             CharSequence contentInfo, int number, Bitmap largeIcon, CharSequence subText,
@@ -168,8 +156,6 @@ class NotificationCompatImplBase {
         return big;
     }
 
-    @RequiresApi(11)
-    @TargetApi(11)
     private static RemoteViews generateMediaActionButton(Context context,
             NotificationCompatBase.Action action) {
         final boolean tombstone = (action.getActionIntent() == null);
@@ -179,14 +165,12 @@ class NotificationCompatImplBase {
         if (!tombstone) {
             button.setOnClickPendingIntent(R.id.action0, action.getActionIntent());
         }
-        if (Build.VERSION.SDK_INT >= 15) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
             button.setContentDescription(R.id.action0, action.getTitle());
         }
         return button;
     }
 
-    @RequiresApi(11)
-    @TargetApi(11)
     private static int getBigMediaLayoutResource(boolean decoratedCustomView, int actionCount) {
         if (actionCount <= 3) {
             return decoratedCustomView
@@ -239,9 +223,7 @@ class NotificationCompatImplBase {
         if (!tombstone) {
             button.setOnClickPendingIntent(R.id.action_container, action.actionIntent);
         }
-        if (Build.VERSION.SDK_INT >= 15) {
-            button.setContentDescription(R.id.action_container, action.title);
-        }
+        button.setContentDescription(R.id.action_container, action.title);
         return button;
     }
 
@@ -283,7 +265,9 @@ class NotificationCompatImplBase {
         boolean showLine2 = false;
 
         boolean minPriority = priority < NotificationCompat.PRIORITY_LOW;
-        if (Build.VERSION.SDK_INT >= 16 && Build.VERSION.SDK_INT < 21) {
+        boolean afterJellyBean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+        boolean afterLollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+        if (afterJellyBean && !afterLollipop) {
             // lets color the backgrounds
             if (minPriority) {
                 contentView.setInt(R.id.notification_background,
@@ -301,7 +285,7 @@ class NotificationCompatImplBase {
         if (largeIcon != null) {
             // On versions before Jellybean, the large icon was shown by SystemUI, so we need to hide
             // it here.
-            if (Build.VERSION.SDK_INT >= 16) {
+            if (afterJellyBean) {
                 contentView.setViewVisibility(R.id.icon, View.VISIBLE);
                 contentView.setImageViewBitmap(R.id.icon, largeIcon);
             } else {
@@ -312,7 +296,7 @@ class NotificationCompatImplBase {
                         R.dimen.notification_right_icon_size);
                 int iconSize = backgroundSize - res.getDimensionPixelSize(
                         R.dimen.notification_small_icon_background_padding) * 2;
-                if (Build.VERSION.SDK_INT >= 21) {
+                if (afterLollipop) {
                     Bitmap smallBit = createIconWithBackground(context,
                             smallIcon,
                             backgroundSize,
@@ -327,7 +311,7 @@ class NotificationCompatImplBase {
             }
         } else if (smallIcon != 0) { // small icon at left
             contentView.setViewVisibility(R.id.icon, View.VISIBLE);
-            if (Build.VERSION.SDK_INT >= 21) {
+            if (afterLollipop) {
                 int backgroundSize = res.getDimensionPixelSize(
                         R.dimen.notification_large_icon_width)
                         - res.getDimensionPixelSize(R.dimen.notification_big_circle_margin);
@@ -352,7 +336,7 @@ class NotificationCompatImplBase {
             showLine3 = true;
         }
         // If there is a large icon we have a right side
-        boolean hasRightSide = !(Build.VERSION.SDK_INT >= 21) && largeIcon != null;
+        boolean hasRightSide = !afterLollipop && largeIcon != null;
         if (contentInfo != null) {
             contentView.setTextViewText(R.id.info, contentInfo);
             contentView.setViewVisibility(R.id.info, View.VISIBLE);
@@ -376,7 +360,7 @@ class NotificationCompatImplBase {
         }
 
         // Need to show three lines? Only allow on Jellybean+
-        if (subText != null && Build.VERSION.SDK_INT >= 16) {
+        if (subText != null && afterJellyBean) {
             contentView.setTextViewText(R.id.text, subText);
             if (contentText != null) {
                 contentView.setTextViewText(R.id.text2, contentText);
@@ -388,7 +372,7 @@ class NotificationCompatImplBase {
         }
 
         // RemoteViews.setViewPadding and RemoteViews.setTextViewTextSize is not available on ICS-
-        if (showLine2 && Build.VERSION.SDK_INT >= 16) {
+        if (showLine2 && afterJellyBean) {
             if (fitIn1U) {
                 // need to shrink all the type to make sure everything fits
                 final float subTextSize = res.getDimensionPixelSize(
@@ -400,7 +384,7 @@ class NotificationCompatImplBase {
         }
 
         if (when != 0) {
-            if (useChronometer && Build.VERSION.SDK_INT >= 16) {
+            if (useChronometer && afterJellyBean) {
                 contentView.setViewVisibility(R.id.chronometer, View.VISIBLE);
                 contentView.setLong(R.id.chronometer, "setBase",
                         when + (SystemClock.elapsedRealtime() - System.currentTimeMillis()));

@@ -16,8 +16,6 @@
 
 package android.support.v7.view.menu;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.RestrictTo;
@@ -35,12 +33,14 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
  * The item view for each item in the ListView-based MenuViews.
  *
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class ListMenuItemView extends LinearLayout implements MenuView.ItemView {
     private static final String TAG = "ListMenuItemView";
     private MenuItemImpl mItemData;

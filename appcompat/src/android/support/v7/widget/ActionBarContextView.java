@@ -16,8 +16,6 @@
 
 package android.support.v7.widget;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RestrictTo;
@@ -34,10 +32,12 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class ActionBarContextView extends AbsActionBarView {
     private static final String TAG = "ActionBarContextView";
 

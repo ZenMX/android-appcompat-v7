@@ -23,6 +23,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.PopupWindowCompat;
 import android.support.v7.view.menu.ListMenuItemView;
 import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.view.menu.MenuBuilder;
@@ -32,13 +33,15 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ListAdapter;
 import android.widget.PopupWindow;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 
 /**
  * A MenuPopupWindow represents the popup window for menu.
@@ -48,7 +51,7 @@ import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
  *
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class MenuPopupWindow extends ListPopupWindow implements MenuItemHoverListener {
     private static final String TAG = "MenuPopupWindow";
 
@@ -125,7 +128,7 @@ public class MenuPopupWindow extends ListPopupWindow implements MenuItemHoverLis
     /**
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public static class MenuDropDownListView extends DropDownListView {
         final int mAdvanceKey;
         final int mRetreatKey;
@@ -171,11 +174,7 @@ public class MenuPopupWindow extends ListPopupWindow implements MenuItemHoverLis
                 setSelection(INVALID_POSITION);
 
                 // Close only the top-level menu.
-                try {
-                    ((MenuAdapter) getAdapter()).getAdapterMenu().close(false /* closeAllMenus */);
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
+                ((MenuAdapter) getAdapter()).getAdapterMenu().close(false /* closeAllMenus */);
                 return true;
             }
             return super.onKeyDown(keyCode, event);

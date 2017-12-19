@@ -17,17 +17,17 @@
 package android.support.v7.app;
 
 import android.support.test.annotation.UiThreadTest;
-import android.support.test.filters.SmallTest;
+import android.test.suitebuilder.annotation.SmallTest;
 
 import org.junit.Test;
 
-@SmallTest
-public class BasicsTestCaseWithWindowDecor extends BaseBasicsTestCase<WindowDecorAppCompatActivity> {
+public class BasicsTestCaseWithWindowDecor extends BaseBasicsTestCase<WindowDecorActionBarActivity> {
     public BasicsTestCaseWithWindowDecor() {
-        super(WindowDecorAppCompatActivity.class);
+        super(WindowDecorActionBarActivity.class);
     }
 
     @Test
+    @SmallTest
     @UiThreadTest
     public void testSupportActionModeAppCompatCallbacks() {
         // Since we're using the decor action bar, any action modes not will be created

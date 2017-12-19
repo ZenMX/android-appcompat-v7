@@ -16,8 +16,6 @@
 
 package android.support.v7.widget;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
@@ -29,6 +27,8 @@ import android.support.v4.view.TintableBackgroundView;
 import android.support.v7.appcompat.R;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 
 /**
  * A {@link ImageView} which supports compatible features on older version of the platform,
@@ -103,7 +103,7 @@ public class AppCompatImageView extends ImageView implements TintableBackgroundV
      *
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     @Override
     public void setSupportBackgroundTintList(@Nullable ColorStateList tint) {
         if (mBackgroundTintHelper != null) {
@@ -117,7 +117,7 @@ public class AppCompatImageView extends ImageView implements TintableBackgroundV
      *
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     @Override
     @Nullable
     public ColorStateList getSupportBackgroundTintList() {
@@ -131,7 +131,7 @@ public class AppCompatImageView extends ImageView implements TintableBackgroundV
      *
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     @Override
     public void setSupportBackgroundTintMode(@Nullable PorterDuff.Mode tintMode) {
         if (mBackgroundTintHelper != null) {
@@ -145,7 +145,7 @@ public class AppCompatImageView extends ImageView implements TintableBackgroundV
      *
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     @Override
     @Nullable
     public PorterDuff.Mode getSupportBackgroundTintMode() {

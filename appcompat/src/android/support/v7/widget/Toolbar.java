@@ -16,8 +16,6 @@
 
 package android.support.v7.widget;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -66,6 +64,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 
 /**
  * A standard toolbar for use within application content.
@@ -503,7 +503,7 @@ public class Toolbar extends ViewGroup {
     }
 
     /** @hide */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public boolean canShowOverflowMenu() {
         return getVisibility() == VISIBLE && mMenuView != null && mMenuView.isOverflowReserved();
     }
@@ -519,7 +519,7 @@ public class Toolbar extends ViewGroup {
     }
 
     /** @hide */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public boolean isOverflowMenuShowPending() {
         return mMenuView != null && mMenuView.isOverflowMenuShowPending();
     }
@@ -543,7 +543,7 @@ public class Toolbar extends ViewGroup {
     }
 
     /** @hide */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public void setMenu(MenuBuilder menu, ActionMenuPresenter outerPresenter) {
         if (menu == null && mMenuView == null) {
             return;
@@ -589,7 +589,7 @@ public class Toolbar extends ViewGroup {
     }
 
     /** @hide */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public boolean isTitleTruncated() {
         if (mTitleTextView == null) {
             return false;
@@ -2109,7 +2109,7 @@ public class Toolbar extends ViewGroup {
     }
 
     /** @hide */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public DecorToolbar getWrapper() {
         if (mWrapper == null) {
             mWrapper = new ToolbarWidgetWrapper(this, true);
@@ -2148,7 +2148,7 @@ public class Toolbar extends ViewGroup {
      * it could be considered "empty" (no visible elements with nonzero measured size)
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public void setCollapsible(boolean collapsible) {
         mCollapsible = collapsible;
         requestLayout();
@@ -2158,7 +2158,7 @@ public class Toolbar extends ViewGroup {
      * Must be called before the menu is accessed
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public void setMenuCallbacks(MenuPresenter.Callback pcb, MenuBuilder.Callback mcb) {
         mActionMenuPresenterCallback = pcb;
         mMenuBuilderCallback = mcb;
@@ -2194,7 +2194,7 @@ public class Toolbar extends ViewGroup {
      * <p>Toolbar.LayoutParams extends ActionBar.LayoutParams for compatibility with existing
      * ActionBar API. See
      * {@link android.support.v7.app.AppCompatActivity#setSupportActionBar(Toolbar)
-     * AppCompatActivity.setSupportActionBar}
+     * ActionBarActivity.setActionBar}
      * for more info on how to use a Toolbar as your Activity's ActionBar.</p>
      */
     public static class LayoutParams extends ActionBar.LayoutParams {

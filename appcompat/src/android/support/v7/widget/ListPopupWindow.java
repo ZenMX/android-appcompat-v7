@@ -16,8 +16,6 @@
 
 package android.support.v7.widget;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
@@ -30,6 +28,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RestrictTo;
 import android.support.annotation.StyleRes;
+import android.support.v4.os.BuildCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.PopupWindowCompat;
 import android.support.v7.appcompat.R;
@@ -54,6 +53,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import java.lang.reflect.Method;
+
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 
 /**
  * Static library support version of the framework's {@link android.widget.ListPopupWindow}.
@@ -348,7 +349,7 @@ public class ListPopupWindow implements ShowableListMenu {
      *
      * @hide Used only by AutoCompleteTextView to handle some internal special cases.
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public void setForceIgnoreOutsideTouch(boolean forceIgnoreOutsideTouch) {
         mForceIgnoreOutsideTouch = forceIgnoreOutsideTouch;
     }
@@ -364,7 +365,7 @@ public class ListPopupWindow implements ShowableListMenu {
      *
      * @hide Only used by AutoCompleteTextView under special conditions.
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public void setDropDownAlwaysVisible(boolean dropDownAlwaysVisible) {
         mDropDownAlwaysVisible = dropDownAlwaysVisible;
     }
@@ -374,7 +375,7 @@ public class ListPopupWindow implements ShowableListMenu {
      *
      * @hide Only used by AutoCompleteTextView under special conditions.
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public boolean isDropDownAlwaysVisible() {
         return mDropDownAlwaysVisible;
     }
@@ -509,7 +510,7 @@ public class ListPopupWindow implements ShowableListMenu {
      * @param bounds anchor-relative bounds
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public void setEpicenterBounds(Rect bounds) {
         mEpicenterBounds = bounds;
     }

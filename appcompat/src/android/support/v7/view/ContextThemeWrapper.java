@@ -16,16 +16,15 @@
 
 package android.support.v7.view;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.support.annotation.RestrictTo;
 import android.support.annotation.StyleRes;
 import android.support.v7.appcompat.R;
 import android.view.LayoutInflater;
+
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 
 /**
  * A ContextWrapper that allows you to modify the theme from what is in the
@@ -33,7 +32,7 @@ import android.view.LayoutInflater;
  *
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class ContextThemeWrapper extends ContextWrapper {
     private int mThemeResource;
     private Resources.Theme mTheme;
@@ -111,12 +110,6 @@ public class ContextThemeWrapper extends ContextWrapper {
             }
         }
         onApplyThemeResource(mTheme, mThemeResource, first);
-    }
-
-    @Override
-    public AssetManager getAssets() {
-        // Ensure we're returning assets with the correct configuration.
-        return getResources().getAssets();
     }
 }
 

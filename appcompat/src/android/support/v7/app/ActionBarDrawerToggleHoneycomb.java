@@ -18,13 +18,11 @@
 package android.support.v7.app;
 
 import android.R;
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +39,6 @@ import java.lang.reflect.Method;
  *
  * Moved from Support-v4
  */
-@RequiresApi(11)
-@TargetApi(11)
 class ActionBarDrawerToggleHoneycomb {
     private static final String TAG = "ActionBarDrawerToggleHoneycomb";
 

@@ -16,8 +16,6 @@
 
 package android.support.v7.view.menu;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -37,10 +35,12 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.widget.LinearLayout;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public final class MenuItemImpl implements SupportMenuItem {
 
     private static final String TAG = "MenuItemImpl";

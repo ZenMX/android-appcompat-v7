@@ -15,44 +15,23 @@
  */
 package android.support.v7.app;
 
-import static android.support.test.espresso.Espresso.onData;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.isDialog;
-import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.core.AllOf.allOf;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.DataInteraction;
-import android.support.test.filters.MediumTest;
 import android.support.v7.appcompat.test.R;
 import android.support.v7.testutils.TestUtilsMatchers;
+import android.test.ActivityInstrumentationTestCase2;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
 import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
@@ -60,7 +39,20 @@ import org.junit.Test;
 
 import java.io.File;
 
-@MediumTest
+import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.isDialog;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
+
 public class AlertDialogCursorTest
         extends BaseInstrumentationTestCase<AlertDialogTestActivity> {
 
@@ -125,11 +117,11 @@ public class AlertDialogCursorTest
     }
 
     @After
-    public void tearDown() throws Throwable {
+    public void tearDown() {
         if (mCursor != null) {
             // Close the cursor on the UI thread as the list view in the alert dialog
             // will get notified of any change to the underlying cursor.
-            mActivityTestRule.runOnUiThread(new Runnable() {
+            InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
                 @Override
                 public void run() {
                     mCursor.close();
@@ -142,9 +134,6 @@ public class AlertDialogCursorTest
         }
         if (mDatabaseFile != null) {
             mDatabaseFile.delete();
-        }
-        if (mAlertDialog != null) {
-            mAlertDialog.dismiss();
         }
     }
 
@@ -192,6 +181,7 @@ public class AlertDialogCursorTest
     }
 
     @Test
+    @SmallTest
     public void testSimpleItemsFromCursor() {
         mCursor = mDatabase.query("test", mProjectionWithoutChecked,
                 null, null, null, null, null);
@@ -290,6 +280,7 @@ public class AlertDialogCursorTest
     }
 
     @Test
+    @SmallTest
     public void testMultiChoiceItemsFromCursor() {
         mCursor = mDatabase.query("test", mProjectionWithChecked,
                 null, null, null, null, null);
@@ -400,6 +391,7 @@ public class AlertDialogCursorTest
     }
 
     @Test
+    @SmallTest
     public void testSingleChoiceItemsFromCursor() {
         mCursor = mDatabase.query("test", mProjectionWithoutChecked,
                 null, null, null, null, null);

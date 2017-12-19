@@ -35,13 +35,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import android.os.Build;
 import android.support.test.annotation.UiThreadTest;
 import android.support.test.filters.SdkSuppress;
-import android.support.test.filters.SmallTest;
 import android.support.v7.appcompat.test.R;
 import android.support.v7.custom.FitWindowsContentLayout;
 import android.support.v7.testutils.BaseTestActivity;
+import android.support.v7.testutils.TestUtils;
 import android.support.v7.view.ActionMode;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowInsets;
@@ -66,13 +68,36 @@ public abstract class BaseBasicsTestCase<A extends BaseTestActivity>
         assertEquals(getActivity().getTitle(), getActivity().getSupportActionBar().getTitle());
     }
 
-    @UiThreadTest
     @Test
-    public void testSetActionBarTitle() {
+    public void testSetActionBarTitle() throws Throwable {
         final String newTitle = "hello";
-        mActivityTestRule.getActivity().setTitle(newTitle);
-        assertEquals("New title is set to ActionBar",
-                newTitle, mActivityTestRule.getActivity().getSupportActionBar().getTitle());
+        runTestOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().setTitle(newTitle);
+                assertEquals("New title is set to ActionBar",
+                        newTitle, getActivity().getSupportActionBar().getTitle());
+            }
+        });
+    }
+
+    @Test
+    public void testMenuInvalidationAfterDestroy() throws Throwable {
+        final A activity = getActivity();
+        // Reset to make sure that we don't have a menu currently
+        activity.reset();
+        assertNull(activity.getMenu());
+
+        // Now destroy the Activity
+        activity.finish();
+        TestUtils.waitForActivityDestroyed(activity);
+
+        // Now dispatch a menu invalidation and wait for an idle sync
+        activity.supportInvalidateOptionsMenu();
+        getInstrumentation().waitForIdleSync();
+
+        // Make sure that we don't have a menu given to use after being destroyed
+        assertNull(activity.getMenu());
     }
 
     @Test

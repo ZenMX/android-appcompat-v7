@@ -15,38 +15,6 @@
  */
 package android.support.v7.app;
 
-import static android.support.test.espresso.Espresso.onData;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.PositionAssertions.isBelow;
-import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.LayoutMatchers.hasEllipsizedText;
-import static android.support.test.espresso.matcher.RootMatchers.isDialog;
-import static android.support.test.espresso.matcher.ViewMatchers.hasSibling;
-import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
-import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.core.AllOf.allOf;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
@@ -54,14 +22,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.ColorInt;
 import android.support.annotation.StringRes;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.annotation.UiThreadTest;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.filters.LargeTest;
-import android.support.test.filters.MediumTest;
-import android.support.test.filters.SmallTest;
 import android.support.v7.appcompat.test.R;
 import android.support.v7.testutils.TestUtilsMatchers;
+import android.test.suitebuilder.annotation.MediumTest;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -72,12 +40,26 @@ import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
 import org.hamcrest.Matcher;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+
+import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.PositionAssertions.isBelow;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.LayoutMatchers.hasEllipsizedText;
+import static android.support.test.espresso.matcher.RootMatchers.isDialog;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests in this class make a few assumptions about the underlying implementation of
@@ -110,13 +92,6 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
         mButton = (Button) activity.findViewById(R.id.test_button);
     }
 
-    @After
-    public void tearDown() {
-        if (mAlertDialog != null) {
-            mAlertDialog.dismiss();
-        }
-    }
-
     private void wireBuilder(final AlertDialog.Builder builder) {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +117,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testBasicContent() {
         final Context context = mActivityTestRule.getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
@@ -173,7 +148,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     // Tests for message logic
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testMessageString() {
         final String dialogMessage = "Dialog message";
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
@@ -186,8 +161,8 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
-    public void testMessageStringPostCreation() throws Throwable {
+    @SmallTest
+    public void testMessageStringPostCreation() {
         final String dialogInitialMessage = "Initial message";
         final String dialogUpdatedMessage = "Updated message";
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
@@ -200,7 +175,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
         onView(withText(dialogInitialMessage)).inRoot(isDialog()).check(matches(isDisplayed()));
 
         // Update the dialog message
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mAlertDialog.setMessage(dialogUpdatedMessage);
@@ -240,7 +215,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testCustomTitle() {
         final Context context = mActivityTestRule.getActivity();
         final LayoutInflater inflater = LayoutInflater.from(context);
@@ -256,7 +231,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testCustomTitlePostCreation() {
         final Context context = mActivityTestRule.getActivity();
         final LayoutInflater inflater = LayoutInflater.from(context);
@@ -309,7 +284,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testCustomView() {
         final Context context = mActivityTestRule.getActivity();
         final LayoutInflater inflater = LayoutInflater.from(context);
@@ -325,7 +300,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testCustomViewById() {
         final Context context = mActivityTestRule.getActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
@@ -340,7 +315,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testCustomViewPostCreation() {
         final Context context = mActivityTestRule.getActivity();
         final LayoutInflater inflater = LayoutInflater.from(context);
@@ -370,7 +345,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     // Tests for cancel logic
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testCancelCancelableDialog() {
         DialogInterface.OnCancelListener mockCancelListener =
                 mock(DialogInterface.OnCancelListener.class);
@@ -391,7 +366,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testCancelNonCancelableDialog() {
         DialogInterface.OnCancelListener mockCancelListener =
                 mock(DialogInterface.OnCancelListener.class);
@@ -446,7 +421,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testCustomAdapter() {
         final Context context = mActivityTestRule.getActivity();
         final String[] content = context.getResources().getStringArray(R.array.alert_dialog_items);
@@ -463,7 +438,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testSimpleItemsFromRuntimeArray() {
         final String[] content = new String[] { "Alice", "Bob", "Charlie", "Delta" };
         final DialogInterface.OnClickListener mockClickListener =
@@ -477,7 +452,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testSimpleItemsFromResourcesArray() {
         final DialogInterface.OnClickListener mockClickListener =
                 mock(DialogInterface.OnClickListener.class);
@@ -572,7 +547,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testMultiChoiceItemsFromRuntimeArray() {
         final String[] content = new String[] { "Alice", "Bob", "Charlie", "Delta" };
         final boolean[] checkedTracker = new boolean[] { false, true, false, false };
@@ -595,7 +570,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testMultiChoiceItemsFromResourcesArray() {
         final boolean[] checkedTracker = new boolean[] { true, false, true, false };
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
@@ -692,7 +667,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testSingleChoiceItemsFromRuntimeArray() {
         final String[] content = new String[] { "Alice", "Bob", "Charlie", "Delta" };
         final DialogInterface.OnClickListener mockClickListener =
@@ -706,7 +681,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testSingleChoiceItemsFromResourcesArray() {
         final DialogInterface.OnClickListener mockClickListener =
                 mock(DialogInterface.OnClickListener.class);
@@ -722,7 +697,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     // Tests for icon logic
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testIconResource() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
                 .setTitle(R.string.alert_dialog_title)
@@ -743,7 +718,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testIconResourceChangeAfterInitialSetup() throws Throwable {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
                 .setTitle(R.string.alert_dialog_title)
@@ -758,7 +733,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
         Thread.sleep(1000);
 
         // Change the icon
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mAlertDialog.setIcon(R.drawable.test_drawable_green);
@@ -775,7 +750,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testIconResourceChangeWithNoInitialSetup() throws Throwable {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
                 .setTitle(R.string.alert_dialog_title)
@@ -789,7 +764,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
         Thread.sleep(1000);
 
         // Change the icon
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mAlertDialog.setIcon(R.drawable.test_drawable_green);
@@ -806,7 +781,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testIconResourceRemoveAfterInitialSetup() throws Throwable {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
                 .setTitle(R.string.alert_dialog_title)
@@ -821,7 +796,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
         Thread.sleep(1000);
 
         // Change the icon
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mAlertDialog.setIcon(0);
@@ -838,7 +813,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testIconDrawable() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
                 .setTitle(R.string.alert_dialog_title)
@@ -859,7 +834,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testIconResourceDrawableAfterInitialSetup() throws Throwable {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
                 .setTitle(R.string.alert_dialog_title)
@@ -874,7 +849,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
         Thread.sleep(1000);
 
         // Change the icon
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mAlertDialog.setIcon(new TestDrawable(0xFF503090, 40, 40));
@@ -891,7 +866,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testIconDrawableChangeWithNoInitialSetup() throws Throwable {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
                 .setTitle(R.string.alert_dialog_title)
@@ -905,7 +880,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
         Thread.sleep(1000);
 
         // Change the icon
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mAlertDialog.setIcon(new TestDrawable(0xFF503090, 40, 40));
@@ -922,7 +897,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testIconDrawableRemoveAfterInitialSetup() throws Throwable {
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivityTestRule.getActivity())
                 .setTitle(R.string.alert_dialog_title)
@@ -937,7 +912,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
         Thread.sleep(1000);
 
         // Change the icon
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mAlertDialog.setIcon(null);
@@ -1271,7 +1246,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testButtonVisibility() {
         final String positiveButtonText = "Positive button";
         final String negativeButtonText = "Negative button";
@@ -1305,7 +1280,7 @@ public class AlertDialogTest extends BaseInstrumentationTestCase<AlertDialogTest
     }
 
     @Test
-    @LargeTest
+    @MediumTest
     public void testButtons() {
         // Positive-only button
         verifyDialogButtons("Positive", null, null, AlertDialog.BUTTON_POSITIVE);

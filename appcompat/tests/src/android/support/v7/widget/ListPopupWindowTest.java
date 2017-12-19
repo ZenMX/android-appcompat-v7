@@ -15,41 +15,17 @@
  */
 package android.support.v7.widget;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 import android.app.Instrumentation;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.FlakyTest;
-import android.support.test.filters.LargeTest;
-import android.support.test.filters.MediumTest;
-import android.support.test.filters.SmallTest;
 import android.support.v7.app.BaseInstrumentationTestCase;
 import android.support.v7.appcompat.test.R;
+import android.test.suitebuilder.annotation.MediumTest;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,6 +38,20 @@ import android.widget.TextView;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 public class ListPopupWindowTest extends BaseInstrumentationTestCase<PopupTestActivity> {
     private FrameLayout mContainer;
@@ -127,9 +117,8 @@ public class ListPopupWindowTest extends BaseInstrumentationTestCase<PopupTestAc
                 .check(matches(isDisplayed()));
     }
 
-    @FlakyTest(bugId = 33669575)
     @Test
-    @LargeTest
+    @SmallTest
     public void testAnchoring() {
         Builder popupBuilder = new Builder();
         popupBuilder.wireToActionButton();
@@ -155,14 +144,14 @@ public class ListPopupWindowTest extends BaseInstrumentationTestCase<PopupTestAc
 
     @Test
     @SmallTest
-    public void testDismissalViaAPI() throws Throwable {
+    public void testDismissalViaAPI() {
         Builder popupBuilder = new Builder().withDismissListener();
         popupBuilder.wireToActionButton();
 
         onView(withId(R.id.test_button)).perform(click());
         assertTrue("Popup window showing", mListPopupWindow.isShowing());
 
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mListPopupWindow.dismiss();
@@ -281,7 +270,7 @@ public class ListPopupWindowTest extends BaseInstrumentationTestCase<PopupTestAc
 
     @Test
     @SmallTest
-    public void testItemClickViaAPI() throws Throwable {
+    public void testItemClickViaAPI() {
         Builder popupBuilder = new Builder().withItemClickListener();
         popupBuilder.wireToActionButton();
 
@@ -292,7 +281,7 @@ public class ListPopupWindowTest extends BaseInstrumentationTestCase<PopupTestAc
         verify(popupBuilder.mOnItemClickListener, never()).onItemClick(
                 any(AdapterView.class), any(View.class), any(int.class), any(int.class));
 
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mListPopupWindow.performItemClick(1);

@@ -16,7 +16,8 @@
 
 package android.support.v7.view;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import android.app.Activity;
 import android.content.Context;
@@ -40,12 +41,11 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 
 /**
  * This class is used to instantiate menu XML files into Menu objects.
@@ -58,7 +58,7 @@ import java.lang.reflect.Method;
  *
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class SupportMenuInflater extends MenuInflater {
     static final String LOG_TAG = "SupportMenuInflater";
 

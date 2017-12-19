@@ -16,8 +16,6 @@
 
 package android.support.v7.graphics.drawable;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
@@ -29,6 +27,8 @@ import android.support.annotation.RestrictTo;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.View;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
  * Drawable which delegates all calls to it's wrapped {@link Drawable}.
  * <p>
@@ -37,7 +37,7 @@ import android.view.View;
  *
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class DrawableWrapper extends Drawable implements Drawable.Callback {
 
     private Drawable mDrawable;

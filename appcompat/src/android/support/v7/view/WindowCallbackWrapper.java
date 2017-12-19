@@ -16,10 +16,6 @@
 
 package android.support.v7.view;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
-import android.annotation.TargetApi;
-import android.support.annotation.RequiresApi;
 import android.support.annotation.RestrictTo;
 import android.view.ActionMode;
 import android.view.KeyEvent;
@@ -35,6 +31,8 @@ import android.view.accessibility.AccessibilityEvent;
 
 import java.util.List;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
  * A simple decorator stub for Window.Callback that passes through any calls
  * to the wrapped instance as a base implementation. Call super.foo() to call into
@@ -42,7 +40,7 @@ import java.util.List;
  *
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class WindowCallbackWrapper implements Window.Callback {
 
     final Window.Callback mWrapped;
@@ -59,8 +57,6 @@ public class WindowCallbackWrapper implements Window.Callback {
         return mWrapped.dispatchKeyEvent(event);
     }
 
-    @RequiresApi(11)
-    @TargetApi(11)
     @Override
     public boolean dispatchKeyShortcutEvent(KeyEvent event) {
         return mWrapped.dispatchKeyShortcutEvent(event);
@@ -76,8 +72,6 @@ public class WindowCallbackWrapper implements Window.Callback {
         return mWrapped.dispatchTrackballEvent(event);
     }
 
-    @RequiresApi(12)
-    @TargetApi(12)
     @Override
     public boolean dispatchGenericMotionEvent(MotionEvent event) {
         return mWrapped.dispatchGenericMotionEvent(event);
@@ -143,8 +137,6 @@ public class WindowCallbackWrapper implements Window.Callback {
         mWrapped.onPanelClosed(featureId, menu);
     }
 
-    @RequiresApi(23)
-    @TargetApi(23)
     @Override
     public boolean onSearchRequested(SearchEvent searchEvent) {
         return mWrapped.onSearchRequested(searchEvent);
@@ -155,36 +147,26 @@ public class WindowCallbackWrapper implements Window.Callback {
         return mWrapped.onSearchRequested();
     }
 
-    @RequiresApi(11)
-    @TargetApi(11)
     @Override
     public ActionMode onWindowStartingActionMode(ActionMode.Callback callback) {
         return mWrapped.onWindowStartingActionMode(callback);
     }
 
-    @RequiresApi(23)
-    @TargetApi(23)
     @Override
     public ActionMode onWindowStartingActionMode(ActionMode.Callback callback, int type) {
         return mWrapped.onWindowStartingActionMode(callback, type);
     }
 
-    @RequiresApi(11)
-    @TargetApi(11)
     @Override
     public void onActionModeStarted(ActionMode mode) {
         mWrapped.onActionModeStarted(mode);
     }
 
-    @RequiresApi(11)
-    @TargetApi(11)
     @Override
     public void onActionModeFinished(ActionMode mode) {
         mWrapped.onActionModeFinished(mode);
     }
 
-    @RequiresApi(24)
-    @TargetApi(24)
     @Override
     public void onProvideKeyboardShortcuts(
             List<KeyboardShortcutGroup> data, Menu menu, int deviceId) {

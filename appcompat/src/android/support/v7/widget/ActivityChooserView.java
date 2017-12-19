@@ -16,8 +16,6 @@
 
 package android.support.v7.widget;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -44,6 +42,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
  * This class is a view for choosing an activity for handling a given {@link Intent}.
  * <p>
@@ -67,7 +67,7 @@ import android.widget.TextView;
  *
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class ActivityChooserView extends ViewGroup implements
         ActivityChooserModel.ActivityChooserModelClient {
 
@@ -325,7 +325,7 @@ public class ActivityChooserView extends ViewGroup implements
      * Set the provider hosting this view, if applicable.
      * @hide Internal use only
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public void setProvider(ActionProvider provider) {
         mProvider = provider;
     }
@@ -845,7 +845,7 @@ public class ActivityChooserView extends ViewGroup implements
      * Allows us to set the background using TintTypedArray
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public static class InnerLayout extends LinearLayoutCompat {
 
         private static final int[] TINT_ATTRS = {

@@ -48,11 +48,9 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Root;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
-import android.support.test.filters.FlakyTest;
-import android.support.test.filters.LargeTest;
-import android.support.test.filters.MediumTest;
 import android.support.v7.app.BaseInstrumentationTestCase;
 import android.support.v7.appcompat.test.R;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -100,7 +98,7 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testBasicContent() {
         final Builder menuBuilder = new Builder();
         menuBuilder.wireToActionButton();
@@ -262,9 +260,8 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
         };
     }
 
-    @FlakyTest(bugId = 33669575)
     @Test
-    @LargeTest
+    @SmallTest
     public void testAnchoring() {
         Builder menuBuilder = new Builder();
         menuBuilder.wireToActionButton();
@@ -287,8 +284,8 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
     }
 
     @Test
-    @MediumTest
-    public void testDismissalViaAPI() throws Throwable {
+    @SmallTest
+    public void testDismissalViaAPI() {
         Builder menuBuilder = new Builder().withDismissListener();
         menuBuilder.wireToActionButton();
 
@@ -296,7 +293,7 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
 
         // Since PopupMenu is not a View, we can't use Espresso's view actions to invoke
         // the dismiss() API
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mPopupMenu.dismiss();
@@ -311,7 +308,7 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testDismissalViaTouch() throws Throwable {
         Builder menuBuilder = new Builder().withDismissListener();
         menuBuilder.wireToActionButton();
@@ -367,7 +364,7 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testSimpleMenuItemClickViaEvent() {
         Builder menuBuilder = new Builder().withMenuItemClickListener();
         menuBuilder.wireToActionButton();
@@ -390,8 +387,8 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
     }
 
     @Test
-    @MediumTest
-    public void testSimpleMenuItemClickViaAPI() throws Throwable {
+    @SmallTest
+    public void testSimpleMenuItemClickViaAPI() {
         Builder menuBuilder = new Builder().withMenuItemClickListener();
         menuBuilder.wireToActionButton();
 
@@ -400,7 +397,7 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
         // Verify that our menu item click listener hasn't been called yet
         verify(menuBuilder.mOnMenuItemClickListener, never()).onMenuItemClick(any(MenuItem.class));
 
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mPopupMenu.getMenu().performIdentifierAction(R.id.action_highlight, 0);
@@ -416,7 +413,7 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testSubMenuClicksViaEvent() throws Throwable {
         Builder menuBuilder = new Builder().withMenuItemClickListener();
         menuBuilder.wireToActionButton();
@@ -478,7 +475,7 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
     }
 
     @Test
-    @MediumTest
+    @SmallTest
     public void testSubMenuClicksViaAPI() throws Throwable {
         Builder menuBuilder = new Builder().withMenuItemClickListener();
         menuBuilder.wireToActionButton();
@@ -488,7 +485,7 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
         // Verify that our menu item click listener hasn't been called yet
         verify(menuBuilder.mOnMenuItemClickListener, never()).onMenuItemClick(any(MenuItem.class));
 
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mPopupMenu.getMenu().performIdentifierAction(R.id.action_share, 0);
@@ -530,7 +527,7 @@ public class PopupMenuTest extends BaseInstrumentationTestCase<PopupTestActivity
                 .check(matches(isDisplayed()));
 
         // Now ask the share submenu to perform an action on its specific menu item
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mPopupMenu.getMenu().findItem(R.id.action_share).getSubMenu().

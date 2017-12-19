@@ -20,7 +20,6 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.view.Window.FEATURE_OPTIONS_PANEL;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -37,7 +36,6 @@ import android.os.Parcelable;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.NavUtils;
 import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
@@ -92,14 +90,8 @@ import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import org.xmlpull.v1.XmlPullParser;
-
-@RequiresApi(9)
-@TargetApi(9)
 class AppCompatDelegateImplV9 extends AppCompatDelegateImplBase
         implements MenuBuilder.Callback, LayoutInflaterFactory {
-
-    private static final boolean IS_PRE_LOLLIPOP = Build.VERSION.SDK_INT < 21;
 
     private DecorContentParent mDecorContentParent;
     private ActionMenuPresenterCallback mActionMenuPresenterCallback;
@@ -220,7 +212,7 @@ class AppCompatDelegateImplV9 extends AppCompatDelegateImplBase
 
         if (toolbar != null) {
             final ToolbarActionBar tbab = new ToolbarActionBar(toolbar,
-                    ((Activity) mOriginalWindowCallback).getTitle(), mAppCompatWindowCallback);
+                    ((Activity) mContext).getTitle(), mAppCompatWindowCallback);
             mActionBar = tbab;
             mWindow.setCallback(tbab.getWrappedWindowCallback());
         } else {
@@ -627,7 +619,7 @@ class AppCompatDelegateImplV9 extends AppCompatDelegateImplBase
             case Window.FEATURE_NO_TITLE:
                 return mWindowNoTitle;
         }
-        return false;
+        return mWindow.hasFeature(featureId);
     }
 
     @Override
@@ -1013,21 +1005,17 @@ class AppCompatDelegateImplV9 extends AppCompatDelegateImplBase
     @Override
     public View createView(View parent, final String name, @NonNull Context context,
             @NonNull AttributeSet attrs) {
+        final boolean isPre21 = Build.VERSION.SDK_INT < 21;
+
         if (mAppCompatViewInflater == null) {
             mAppCompatViewInflater = new AppCompatViewInflater();
         }
 
-        boolean inheritContext = false;
-        if (IS_PRE_LOLLIPOP) {
-            inheritContext = (attrs instanceof XmlPullParser)
-                    // If we have a XmlPullParser, we can detect where we are in the layout
-                    ? ((XmlPullParser) attrs).getDepth() > 1
-                    // Otherwise we have to use the old heuristic
-                    : shouldInheritContext((ViewParent) parent);
-        }
+        // We only want the View to inherit its context if we're running pre-v21
+        final boolean inheritContext = isPre21 && shouldInheritContext((ViewParent) parent);
 
         return mAppCompatViewInflater.createView(parent, name, context, attrs, inheritContext,
-                IS_PRE_LOLLIPOP, /* Only read android:theme pre-L (L+ handles this anyway) */
+                isPre21, /* Only read android:theme pre-L (L+ handles this anyway) */
                 true, /* Read read app:theme as a fallback at all times for legacy reasons */
                 VectorEnabledTintResources.shouldBeUsed() /* Only tint wrap the context if enabled */
         );
@@ -1076,7 +1064,8 @@ class AppCompatDelegateImplV9 extends AppCompatDelegateImplBase
      * From {@link android.support.v4.view.LayoutInflaterFactory}
      */
     @Override
-    public final View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+    public final View onCreateView(View parent, String name,
+            Context context, AttributeSet attrs) {
         // First let the Activity's Factory try and inflate the view
         final View view = callActivityOnCreateView(parent, name, context, attrs);
         if (view != null) {

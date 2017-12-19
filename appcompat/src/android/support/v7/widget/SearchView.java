@@ -16,7 +16,7 @@
 
 package android.support.v7.widget;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 import static android.support.v7.widget.SuggestionsAdapter.getColumnString;
 
 import android.annotation.TargetApi;
@@ -461,7 +461,7 @@ public class SearchView extends LinearLayoutCompat implements CollapsibleActionV
      * @param appSearchData bundle provided by the app when launching the search dialog
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public void setAppSearchData(Bundle appSearchData) {
         mAppSearchData = appSearchData;
     }
@@ -511,6 +511,8 @@ public class SearchView extends LinearLayoutCompat implements CollapsibleActionV
         return mSearchSrcTextView.getInputType();
     }
 
+    /** @hide */
+    @RestrictTo(GROUP_ID)
     @Override
     public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
         // Don't accept focus if in the middle of clearing focus
@@ -529,6 +531,8 @@ public class SearchView extends LinearLayoutCompat implements CollapsibleActionV
         }
     }
 
+    /** @hide */
+    @RestrictTo(GROUP_ID)
     @Override
     public void clearFocus() {
         mClearingFocus = true;
@@ -1867,7 +1871,7 @@ public class SearchView extends LinearLayoutCompat implements CollapsibleActionV
      * Local subclass for AutoCompleteTextView.
      * @hide
      */
-    @RestrictTo(LIBRARY_GROUP)
+    @RestrictTo(GROUP_ID)
     public static class SearchAutoComplete extends AppCompatAutoCompleteTextView {
 
         private int mThreshold;

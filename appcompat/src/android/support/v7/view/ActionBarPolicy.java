@@ -16,9 +16,8 @@
 
 package android.support.v7.view;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -26,7 +25,10 @@ import android.support.annotation.RestrictTo;
 import android.support.v4.content.res.ConfigurationHelper;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v7.appcompat.R;
+import android.util.DisplayMetrics;
 import android.view.ViewConfiguration;
+
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 
 /**
  * Allows components to query for various configuration policy decisions about how the action bar
@@ -34,7 +36,7 @@ import android.view.ViewConfiguration;
  *
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public class ActionBarPolicy {
 
     private Context mContext;

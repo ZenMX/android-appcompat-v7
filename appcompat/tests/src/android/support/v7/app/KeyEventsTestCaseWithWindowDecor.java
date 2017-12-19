@@ -16,8 +16,8 @@
 
 package android.support.v7.app;
 
-public class KeyEventsTestCaseWithWindowDecor extends BaseKeyEventsTestCase<WindowDecorAppCompatActivity> {
+public class KeyEventsTestCaseWithWindowDecor extends BaseKeyEventsTestCase<WindowDecorActionBarActivity> {
     public KeyEventsTestCaseWithWindowDecor() {
-        super(WindowDecorAppCompatActivity.class);
+        super(WindowDecorActionBarActivity.class);
     }
 }

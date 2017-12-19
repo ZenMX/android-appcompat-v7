@@ -16,8 +16,6 @@
 
 package android.support.v7.widget;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -31,13 +29,15 @@ import android.view.ViewParent;
 
 import java.lang.ref.WeakReference;
 
+import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+
 /**
  * Backport of {@link android.view.ViewStub} so that we can set the
  * {@link android.view.LayoutInflater} on devices before Jelly Bean.
  *
  * @hide
  */
-@RestrictTo(LIBRARY_GROUP)
+@RestrictTo(GROUP_ID)
 public final class ViewStubCompat extends View {
     private int mLayoutResource = 0;
     private int mInflatedId;

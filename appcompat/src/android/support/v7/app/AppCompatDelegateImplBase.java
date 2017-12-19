@@ -16,7 +16,6 @@
 
 package android.support.v7.app;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -24,7 +23,6 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.appcompat.R;
 import android.support.v7.view.ActionMode;
 import android.support.v7.view.SupportMenuInflater;
@@ -38,8 +36,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.Window;
 
-@RequiresApi(9)
-@TargetApi(9)
 abstract class AppCompatDelegateImplBase extends AppCompatDelegate {
 
     static final boolean DEBUG = false;

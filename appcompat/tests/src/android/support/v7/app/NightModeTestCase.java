@@ -21,14 +21,12 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static android.support.v7.app.NightModeActivity.TOP_ACTIVITY;
+import static android.support.v7.testutils.TestUtils.setLocalNightModeAndWaitForRecreate;
 import static android.support.v7.testutils.TestUtilsMatchers.isBackground;
 
 import static org.junit.Assert.assertFalse;
 
-import android.app.Instrumentation;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SdkSuppress;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.appcompat.test.R;
 import android.test.suitebuilder.annotation.MediumTest;
 
@@ -54,23 +52,22 @@ public class NightModeTestCase extends BaseInstrumentationTestCase<NightModeActi
     }
 
     @Test
-    public void testLocalDayNightModeRecreatesActivity() throws Throwable {
+    public void testLocalDayNightModeRecreatesActivity() {
         // Verify first that we're in day mode
         onView(withId(R.id.text_night_mode)).check(matches(withText(STRING_DAY)));
 
         // Now force the local night mode to be yes (aka night mode)
-        setLocalNightModeAndWaitForRecreate(
-                mActivityTestRule.getActivity(), AppCompatDelegate.MODE_NIGHT_YES);
+        setLocalNightModeAndWaitForRecreate(getActivity(), AppCompatDelegate.MODE_NIGHT_YES);
 
         // Now check the text has changed, signifying that night resources are being used
         onView(withId(R.id.text_night_mode)).check(matches(withText(STRING_NIGHT)));
     }
 
     @Test
-    public void testColorConvertedDrawableChangesWithNightMode() throws Throwable {
-        final NightModeActivity activity = mActivityTestRule.getActivity();
-        final int dayColor = ContextCompat.getColor(activity, R.color.color_sky_day);
-        final int nightColor = ContextCompat.getColor(activity, R.color.color_sky_night);
+    public void testColorConvertedDrawableChangesWithNightMode() {
+        final NightModeActivity activity = getActivity();
+        final int dayColor = activity.getResources().getColor(R.color.color_sky_day);
+        final int nightColor = activity.getResources().getColor(R.color.color_sky_night);
 
         // Loop through and switching from day to night and vice-versa multiple times. It needs
         // to be looped since the issue is with drawable caching, therefore we need to prime the
@@ -89,12 +86,12 @@ public class NightModeTestCase extends BaseInstrumentationTestCase<NightModeActi
     }
 
     @Test
-    public void testNightModeAutoRecreatesOnTimeChange() throws Throwable {
+    public void testNightModeAutoRecreatesOnTimeChange() {
         // Create a fake TwilightManager and set it as the app instance
         final FakeTwilightManager twilightManager = new FakeTwilightManager();
         TwilightManager.setInstance(twilightManager);
 
-        final NightModeActivity activity = mActivityTestRule.getActivity();
+        final NightModeActivity activity = getActivity();
         final AppCompatDelegateImplV14 delegate = (AppCompatDelegateImplV14) activity.getDelegate();
 
         // Verify that we're currently in day mode
@@ -107,7 +104,7 @@ public class NightModeTestCase extends BaseInstrumentationTestCase<NightModeActi
         assertFalse(activity.isDestroyed());
 
         // Now update the fake twilight manager to be in night and trigger a fake 'time' change
-        mActivityTestRule.runOnUiThread(new Runnable() {
+        getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 twilightManager.setIsNight(true);
@@ -119,40 +116,6 @@ public class NightModeTestCase extends BaseInstrumentationTestCase<NightModeActi
         getInstrumentation().waitForIdleSync();
 
         // Now check that the text has changed, signifying that night resources are being used
-        onView(withId(R.id.text_night_mode)).check(matches(withText(STRING_NIGHT)));
-    }
-
-    @Test
-    public void testNightModeAutoRecreatesOnResume() throws Throwable {
-        // Create a fake TwilightManager and set it as the app instance
-        final FakeTwilightManager twilightManager = new FakeTwilightManager();
-        TwilightManager.setInstance(twilightManager);
-
-        final NightModeActivity activity = getActivity();
-
-        // Set MODE_NIGHT_AUTO so that we will change to night mode automatically
-        setLocalNightModeAndWaitForRecreate(activity, AppCompatDelegate.MODE_NIGHT_AUTO);
-        // Verify that we're currently in day mode
-        onView(withId(R.id.text_night_mode)).check(matches(withText(STRING_DAY)));
-
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                final Instrumentation instrumentation = getInstrumentation();
-                // Now fool the Activity into thinking that it has gone into the background
-                instrumentation.callActivityOnPause(activity);
-                instrumentation.callActivityOnStop(activity);
-
-                // Now update the twilight manager while the Activity is in the 'background'
-                twilightManager.setIsNight(true);
-
-                // Now tell the Activity that it has gone into the foreground again
-                instrumentation.callActivityOnStart(activity);
-                instrumentation.callActivityOnResume(activity);
-            }
-        });
-
-        // finally check that the text has changed, signifying that night resources are being used
         onView(withId(R.id.text_night_mode)).check(matches(withText(STRING_NIGHT)));
     }
 
@@ -171,17 +134,5 @@ public class NightModeTestCase extends BaseInstrumentationTestCase<NightModeActi
         void setIsNight(boolean night) {
             mIsNight = night;
         }
-    }
-
-    private void setLocalNightModeAndWaitForRecreate(final AppCompatActivity activity,
-            @AppCompatDelegate.NightMode final int nightMode) throws Throwable {
-        final Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        mActivityTestRule.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                activity.getDelegate().setLocalNightMode(nightMode);
-            }
-        });
-        instrumentation.waitForIdleSync();
     }
 }

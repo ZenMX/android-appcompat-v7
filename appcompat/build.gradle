@@ -5,7 +5,7 @@ archivesBaseName = 'appcompat-v7'
 ext {
     supportVersion = '25.4.0'
     publishDesc = 'base on platform_frameworks_support tag : android-7.1.2_r36'
-    v7Version = "${supportVersion}.2"
+    v7Version = "${supportVersion}.4"
 }
 
 dependencies {

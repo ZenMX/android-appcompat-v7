@@ -23,7 +23,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RestrictTo;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.PopupWindowCompat;
 import android.support.v7.view.menu.ListMenuItemView;
 import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.view.menu.MenuBuilder;
@@ -33,12 +32,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ListAdapter;
 import android.widget.PopupWindow;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
@@ -174,7 +171,11 @@ public class MenuPopupWindow extends ListPopupWindow implements MenuItemHoverLis
                 setSelection(INVALID_POSITION);
 
                 // Close only the top-level menu.
-                ((MenuAdapter) getAdapter()).getAdapterMenu().close(false /* closeAllMenus */);
+                try {
+                    ((MenuAdapter) getAdapter()).getAdapterMenu().close(false /* closeAllMenus */);
+                }catch (Exception e) {
+
+                }
                 return true;
             }
             return super.onKeyDown(keyCode, event);

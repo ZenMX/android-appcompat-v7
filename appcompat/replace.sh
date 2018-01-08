@@ -1,18 +1,22 @@
 #! /bin/bash
 
-rm -rf ./replace/replace
+rm -rf ./build/replace
 
-mkdir -p ./replace/replace
+mkdir -p ./build/replace
 
-unzip ./appcompat-v7-25.4.0.aar -d ./replace/replace/appcompat-v7-25.4.0.aar.out/
-unzip ./replace/replace/appcompat-v7-25.4.0.aar.out/classes.jar -d ./replace/replace/appcompat-v7-25.4.0.aar.jar.out/
+unzip ./appcompat-v7-25.4.0.aar -d ./build/replace/appcompat-v7-25.4.0.aar.out/
+unzip ./build/replace/appcompat-v7-25.4.0.aar.out/classes.jar -d ./build/replace/appcompat-v7-25.4.0.aar.jar.out/
 
-unzip ./build/outputs/aar/appcompat-v7-release.aar -d ./replace/replace/appcompat-v7-release.aar.out/
-unzip ./replace/replace/appcompat-v7-release.aar.out/classes.jar -d ./replace/replace/appcompat-v7-release.aar.jar.out/
+unzip ./build/outputs/aar/appcompat-v7-release.aar -d ./build/replace/appcompat-v7-release.aar.out/
+unzip ./build/replace/appcompat-v7-release.aar.out/classes.jar -d ./build/replace/appcompat-v7-release.aar.jar.out/
 
-cp -f ./replace/replace/appcompat-v7-release.aar.jar.out/android/support/v7/widget/MenuPopupWindow.class ./replace/replace/appcompat-v7-25.4.0.aar.jar.out/android/support/v7/widget/
+rm ./build/replace/appcompat-v7-25.4.0.aar.jar.out/android/support/v7/widget/MenuPopupWindow.class
+rm ./build/replace/appcompat-v7-25.4.0.aar.jar.out/android/support/v7/widget/MenuPopupWindow\$MenuDropDownListView.class
 
-cd ./replace/replace/appcompat-v7-25.4.0.aar.jar.out
+cp -f ./build/replace/appcompat-v7-release.aar.jar.out/android/support/v7/widget/MenuPopupWindow.class ./build/replace/appcompat-v7-25.4.0.aar.jar.out/android/support/v7/widget/MenuPopupWindow.class
+cp -f ./build/replace/appcompat-v7-release.aar.jar.out/android/support/v7/widget/MenuPopupWindow\$MenuDropDownListView.class ./build/replace/appcompat-v7-25.4.0.aar.jar.out/android/support/v7/widget/MenuPopupWindow\$MenuDropDownListView.class
+
+cd ./build/replace/appcompat-v7-25.4.0.aar.jar.out
 
 zip -r ../appcompat-v7-25.4.0.aar.jar ./*
 

@@ -5,7 +5,7 @@ archivesBaseName = 'appcompat-v7'
 ext {
     supportVersion = '25.4.0'
     publishDesc = 'base on platform_frameworks_support tag : android-7.1.2_r36'
-    v7Version = "${supportVersion}.4"
+    v7Version = "${supportVersion}.6"
 }
 
 dependencies {
@@ -87,7 +87,8 @@ publishing {
             artifactId 'appcompat-v7'
             version "${v7Version}"
 //            artifact(sourceJar)
-            artifact("$buildDir/outputs/aar/appcompat-v7-release.aar")
+//            artifact("$buildDir/outputs/aar/appcompat-v7-release.aar")
+            artifact("$buildDir/replace/appcompat-v7-25.4.0.aar")
 
             pom.withXml {
                 def root = asNode()
@@ -129,7 +130,7 @@ publishing {
             }
 
             // change to point to your repo, e.g. http://my.org/repo
-            url "http://10.7.0.7:8098/nexus/content/repositories/releases/"
+            url "http://mx.git.com:8098/nexus/content/repositories/releases/"
 
         }
     }
@@ -198,5 +199,26 @@ publishing {
 //                }
 //            }
 //        }
+//    }
+//}
+
+task replaceClass(type:Exec) {
+    workingDir project.file('./').getAbsolutePath()
+
+    //on linux
+    commandLine './replace.sh'
+
+    //store the output instead of printing to the console:
+    standardOutput = new ByteArrayOutputStream()
+
+    //extension method stopTomcat.output() can be used to obtain the output:
+    ext.output = {
+        return standardOutput.toString()
+    }
+}
+
+//tasks.create(name: 'replaceClass') {
+//    doLast {
+//
 //    }
 //}

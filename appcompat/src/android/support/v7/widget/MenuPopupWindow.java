@@ -38,7 +38,7 @@ import android.widget.PopupWindow;
 
 import java.lang.reflect.Method;
 
-import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
+import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 /**
  * A MenuPopupWindow represents the popup window for menu.
@@ -48,7 +48,7 @@ import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
  *
  * @hide
  */
-@RestrictTo(GROUP_ID)
+@RestrictTo(LIBRARY_GROUP)
 public class MenuPopupWindow extends ListPopupWindow implements MenuItemHoverListener {
     private static final String TAG = "MenuPopupWindow";
 
@@ -125,7 +125,7 @@ public class MenuPopupWindow extends ListPopupWindow implements MenuItemHoverLis
     /**
      * @hide
      */
-    @RestrictTo(GROUP_ID)
+    @RestrictTo(LIBRARY_GROUP)
     public static class MenuDropDownListView extends DropDownListView {
         final int mAdvanceKey;
         final int mRetreatKey;

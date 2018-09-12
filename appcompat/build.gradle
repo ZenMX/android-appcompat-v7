@@ -3,9 +3,9 @@ apply plugin: 'maven-publish'
 archivesBaseName = 'appcompat-v7'
 
 ext {
-    supportVersion = '25.4.0'
+    supportVersion = '26.1.0'
     publishDesc = 'base on platform_frameworks_support tag : android-7.1.2_r36'
-    v7Version = "${supportVersion}.7"
+    v7Version = "${supportVersion}.1"
 }
 
 dependencies {
@@ -88,7 +88,7 @@ publishing {
             version "${v7Version}"
 //            artifact(sourceJar)
 //            artifact("$buildDir/outputs/aar/appcompat-v7-release.aar")
-            artifact("$buildDir/replace/appcompat-v7-25.4.0.aar")
+            artifact("$buildDir/replace/appcompat-v7-${supportVersion}.aar")
 
             pom.withXml {
                 def root = asNode()

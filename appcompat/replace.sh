@@ -4,7 +4,15 @@ rm -rf ./build/replace
 
 mkdir -p ./build/replace
 
-COMPAT_VERSION=27.0.0
+##COMPAT_VERSION=27.1.1
+COMPAT_VERSION=$1
+
+rm -f ./appcompat-v7-${COMPAT_VERSION}.aar
+curl -L https://maven.google.com/com/android/support/appcompat-v7/${COMPAT_VERSION}/appcompat-v7-${COMPAT_VERSION}.aar -o ./appcompat-v7-${COMPAT_VERSION}.aar
+
+rm -f ./build/appcompat-v7-${COMPAT_VERSION}-sources.jar
+curl -L https://maven.google.com/com/android/support/appcompat-v7/${COMPAT_VERSION}/appcompat-v7-${COMPAT_VERSION}-sources.jar -o ./build/appcompat-v7-${COMPAT_VERSION}-sources.jar
+unzip ./build/appcompat-v7-${COMPAT_VERSION}-sources.jar -d ./build/sources/
 
 unzip ./appcompat-v7-${COMPAT_VERSION}.aar -d ./build/replace/appcompat-v7-${COMPAT_VERSION}.aar.out/
 unzip ./build/replace/appcompat-v7-${COMPAT_VERSION}.aar.out/classes.jar -d ./build/replace/appcompat-v7-${COMPAT_VERSION}.aar.jar.out/

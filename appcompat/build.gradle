@@ -2,10 +2,22 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 archivesBaseName = 'appcompat-v7'
 
+// it is possible to build an appcompat v7 of 25.3.1
+//and then update it to target version. 27.1.1 e.g.
 ext {
-    supportVersion = '27.0.0'
+    supportVersion = '27.1.1'
     publishDesc = 'base on platform_frameworks_support tag : android-7.1.2_r36'
     v7Version = "${supportVersion}.1"
+}
+
+tasks.create(name: 'replaceAndBuild', type: Exec) {
+    workingDir project.file('./')
+    commandLine './replace.sh'
+    args "${supportVersion}"
+    standardOutput = new ByteArrayOutputStream()
+    ext.output = {
+        return standardOutput.toString()
+    }
 }
 
 dependencies {
@@ -82,7 +94,7 @@ android.libraryVariants.all { variant ->
 
 publishing {
     publications {
-        bar(MavenPublication) {
+        mavenRelease(MavenPublication) {
             groupId 'com.android.support'
             artifactId 'appcompat-v7'
             version "${v7Version}"
@@ -123,7 +135,7 @@ publishing {
     }
     repositories {
         maven {
-            name 'Dev'
+            name 'Release'
             credentials {
                 username 'admin'
                 password 'admin123'
@@ -199,26 +211,5 @@ publishing {
 //                }
 //            }
 //        }
-//    }
-//}
-
-task replaceClass(type:Exec) {
-    workingDir project.file('./').getAbsolutePath()
-
-    //on linux
-    commandLine './replace.sh'
-
-    //store the output instead of printing to the console:
-    standardOutput = new ByteArrayOutputStream()
-
-    //extension method stopTomcat.output() can be used to obtain the output:
-    ext.output = {
-        return standardOutput.toString()
-    }
-}
-
-//tasks.create(name: 'replaceClass') {
-//    doLast {
-//
 //    }
 //}

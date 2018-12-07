@@ -7,6 +7,15 @@ mkdir -p ./build/replace
 ##COMPAT_VERSION=27.1.1
 COMPAT_VERSION=$1
 
+rm -rf ./build
+mkdir build
+mkdir -p ./build/sources/
+
+mkdir -p ./build/outputs/aar/
+mkdir -p ./build/replace/
+
+cp ../appcompat-build/build/outputs/aar/appcompat-v7-release.aar ./build/outputs/aar/appcompat-v7-release.aar
+
 rm -f ./appcompat-v7-${COMPAT_VERSION}.aar
 curl -L https://maven.google.com/com/android/support/appcompat-v7/${COMPAT_VERSION}/appcompat-v7-${COMPAT_VERSION}.aar -o ./appcompat-v7-${COMPAT_VERSION}.aar
 

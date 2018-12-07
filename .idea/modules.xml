@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/android-appcompat-v7.iml" filepath="$PROJECT_DIR$/android-appcompat-v7.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/appcompat/appcompat.iml" filepath="$PROJECT_DIR$/appcompat/appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appcompat-build/appcompat-build.iml" filepath="$PROJECT_DIR$/appcompat-build/appcompat-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/myplugin/myplugin.iml" filepath="$PROJECT_DIR$/myplugin/myplugin.iml" />
     </modules>
   </component>

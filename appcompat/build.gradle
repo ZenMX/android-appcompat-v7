@@ -5,7 +5,6 @@ archivesBaseName = 'appcompat-v7'
 // it is possible to build an appcompat v7 of 25.3.1
 //and then update it to target version. 27.1.1 e.g.
 ext {
-    supportVersion = '27.1.1'
     publishDesc = 'base on platform_frameworks_support tag : android-7.1.2_r36'
     v7Version = "${supportVersion}.1"
 }

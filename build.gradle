@@ -26,6 +26,15 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
+def supportVersionGlobal() {
+    def version = System.getenv("SUPPORT_VERSION_GLOBAL")
+    if (version == null || version.length() < 1) {
+        version = '27.1.1'
+    }
+
+    return version
+}
+
 ext {
-    supportVersion = '27.1.1'
+    supportVersion = "${supportVersionGlobal()}"
 }

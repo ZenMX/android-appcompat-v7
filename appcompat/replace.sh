@@ -4,7 +4,7 @@ rm -rf ./build/replace
 
 mkdir -p ./build/replace
 
-COMPAT_VERSION=26.1.0
+COMPAT_VERSION=27.0.0
 
 unzip ./appcompat-v7-${COMPAT_VERSION}.aar -d ./build/replace/appcompat-v7-${COMPAT_VERSION}.aar.out/
 unzip ./build/replace/appcompat-v7-${COMPAT_VERSION}.aar.out/classes.jar -d ./build/replace/appcompat-v7-${COMPAT_VERSION}.aar.jar.out/
